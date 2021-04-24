@@ -1,0 +1,36 @@
+import java.util.regex.Matcher
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+
+ext.moduleName = 'assessmentapp'
+mainClassName = "$moduleName/org.caltech.assessmentapp.App"
+
+
+application {
+    mainClassName = 'org.caltech.assessmentapp.App'
+}
+
+jar {
+    from sourceSets.main.allJava
+    manifest {
+        attributes "Main-Class": "org.caltech.assessmentapp.App"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
